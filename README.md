@@ -1,6 +1,13 @@
 # 🕵️ Homes Colombia
 
+<div style="text-align: center;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Holmesserieslogo.jpg" alt="Logo" width="300" style="display: block; margin: 0 auto;"/>
+</div>
+
+
 **Homes Colombia** es un script en Python para Ciberseguridad utilizado para la búsqueda de nombres de usuario en múltiples plataformas en línea. Recopila información pública sobre una persona o entidad, y así poder identificar posibiles perfiles usados por un atacante, también puede ser usado en casos de Ciberacoso, fraudes o doxing.
+
+![License](https://img.shields.io/badge/license-MIT-blue.svg) ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 
 ---
 
