@@ -1,6 +1,8 @@
 import requests
 import pyfiglet
 import json
+from io import BytesIO
+from reportlab.lib.utils import ImageReader
 from concurrent.futures import ThreadPoolExecutor
 from colorama import Fore, Style, init
 from reportlab.lib.pagesizes import letter
@@ -55,12 +57,23 @@ def encabezado_y_marca(canvas, doc, usuario, fecha):
     """Dibuja el encabezado y marca de agua en cada página"""
     width, height = letter
 
-    # Insertar logo
+
+def encabezado_y_marca(canvas, doc, usuario, fecha):
+    width, height = doc.pagesize
+
+    # URL del logo
     logo_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz3XWYKu_vwhT-kwB_3GYLfw7OHWwzMO2VPw&s"
-    logo_path = "/tmp/logo.png"
-    with open(logo_path, "wb") as f:
-        f.write(requests.get(logo_url).content)
-    canvas.drawImage(logo_path, 50, height - 80, width=50, height=50, mask='auto')
+
+    # Descargar imagen y cargar en memoria
+    response = requests.get(logo_url)
+    logo_stream = BytesIO(response.content)
+
+    # Usar ImageReader para que ReportLab lo entienda
+    logo = ImageReader(logo_stream)
+
+    # Dibujar imagen en el PDF
+    canvas.drawImage(logo, 50, height - 80, width=50, height=50, mask='auto')
+
 
     # Texto empresa
     canvas.setFont("Helvetica-Bold", 16)
@@ -94,7 +107,7 @@ def exportar_pdf(usuario, resultados):
     styleN = styles["Normal"]
 
     story = []
-    story.append(Spacer(1, 100))  # espacio debajo del encabezado
+    story.append(Spacer(1, 30))  # espacio debajo del encabezado
 
     # Tabla de resultados
     data = [["#", "✓", "Nombre de Sitio", "Enlace"]]
